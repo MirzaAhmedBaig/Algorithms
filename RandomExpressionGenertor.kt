@@ -1,3 +1,4 @@
+import net.objecthunter.exp4j.ExpressionBuilder
 import java.util.*
 import javax.script.ScriptEngineManager
 
@@ -115,7 +116,7 @@ class RandomExpressionGenertor {
     }
 
     private fun generateResult(exp: String) {
-        result = getExpressionResult(exp)
+//        result = getExpressionResult(exp)
     }
 
     private fun getRandomOperator(): Char {
@@ -154,11 +155,9 @@ class RandomExpressionGenertor {
     fun ClosedRange<Int>.random() =
             Random().nextInt((endInclusive + 1) - start) + start
 
-    private fun getExpressionResult(exp: String): Int {
-        val mgr = ScriptEngineManager()
-        val engine = mgr.getEngineByName("JavaScript")
-        return engine.eval(exp).toString().toInt()
+    private fun getExpressionResult(exp: String): Double {
+        val expression = ExpressionBuilder(exp).build()
+        return expression.evaluate()
     }
-
 
 }
